@@ -1,6 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { blockData } from "./block-data/block-data";
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  blockData,
+});
 
 const setupStore = () => {
   return configureStore({
