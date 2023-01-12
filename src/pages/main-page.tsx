@@ -1,13 +1,21 @@
 import BlocksList from "../components/blocks-list/blocks-list";
-import logo from "../assets/img/logo.svg"
+import logo from "../assets/img/logo.svg";
 
 function MainPage(): JSX.Element {
   return (
-    <div>
-      <img src={logo} alt="logo" />
+    <main>
+      <div className="main-logo-wrapper">
+        <img
+          className="main-logo"
+          src={logo}
+          alt="logo"
+          width={395}
+          height={196}
+        />
+      </div>
       <BlocksList />
-    </div>
+    </main>
   );
-};
+}
 
 export default MainPage;

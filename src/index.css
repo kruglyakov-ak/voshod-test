@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap");
+
+body {
+  margin: 0 auto;
+  text-align: center;
+  background-image: linear-gradient(252.44deg, #353b41 0%, #191a1c 100%),
+    linear-gradient(180deg, #1f2225 0%, #2e353b 100%);
+  min-height: 100vh;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 17px;
+  color: #fff;
+}
+
+.main-logo-wrapper {
+  height: 156px;
+}
+
+.main-logo {
+  position: absolute;
+  left: calc(50% - 197.5px);
+}
+
+.block-button-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.button {
+  width: 118px;
+  height: 32px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 17px;
+  color: #fff;
+  font-family: "Ubuntu", sans-serif;
+  border-radius: 5px;
+  border: none;
+  background-image: linear-gradient(93.88deg, #2f98cf 51.56%, #2fcfb2 100%);
+  padding: 0;
+  cursor: pointer;
+}
+
+.block-button:not(:last-child) {
+  margin-right: 15px;
+}
+
+.button--active {
+  background-image: none;
+  background-color: #2e353b;
+}

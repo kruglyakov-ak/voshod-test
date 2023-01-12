@@ -15,15 +15,16 @@ function BlocksList(): JSX.Element {
   };
 
   return (
-    <div>
+    <>
       <BlockButtons
         blocks={BLOCKS}
         handleBlockButtonClick={handleBlockButtonClick}
+        showBlocks={showBlocks}
       />
       {BLOCKS.map((block) => (
         <BlockItem key={block.id} block={block} showBlocks={showBlocks} />
       ))}
-    </div>
+    </>
   );
 }
 
