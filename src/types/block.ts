@@ -1,7 +1,7 @@
 import { Field } from "./field";
 
 export type Block = {
-  id: number;
+  id: string;
   name: string;
   fields: Field[];
 };

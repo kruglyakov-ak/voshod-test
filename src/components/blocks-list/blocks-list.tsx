@@ -4,9 +4,9 @@ import BlockButtons from "../block-buttons/block-buttons";
 import BlockItem from "../block-item/block-item";
 
 function BlocksList(): JSX.Element {
-  const [showBlocks, setShowBlocks] = useState<number[]>([]);
+  const [showBlocks, setShowBlocks] = useState<string[]>([]);
 
-  const handleBlockButtonClick = (id: number) => {
+  const handleBlockButtonClick = (id: string) => {
     if (!showBlocks.includes(id)) {
       setShowBlocks([...showBlocks, id]);
     } else {

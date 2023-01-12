@@ -2,7 +2,7 @@ import { Block } from "../../types/block";
 
 type BlockProps = {
   block: Block;
-  showBlocks: number[];
+  showBlocks: string[];
 };
 
 function BlockItem({ block, showBlocks }: BlockProps): JSX.Element {

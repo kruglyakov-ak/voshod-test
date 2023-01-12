@@ -2,7 +2,7 @@ import { Block } from "../../types/block";
 
 type BlockButtonsProps = {
   blocks: Block[];
-  handleBlockButtonClick: (id: number) => void;
+  handleBlockButtonClick: (id: string) => void;
 };
 
 function BlockButtons({
