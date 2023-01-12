@@ -11,25 +11,24 @@ function BlockItem({ block, showBlocks }: BlockProps): JSX.Element {
   return (
     <>
       {isShow && (
-        <form action="">
-          <fieldset>
-            <h2>{block.name}</h2>
+        <form className="block-form">
+          <h2 className="block-form-title">{block.name}</h2>
 
-            {block.fields.map((field) => {
-              return (
-                <label key={field.id}>
-                  {field.title}
+          {block.fields.map((field) => {
+            return (
+              <label key={field.id} className="block-form-label">
+                {field.title}
 
-                  <input
-                    type="text"
-                    placeholder={`Введите ${field.title.toLowerCase()}`}
-                    name={field.id}
-                    id={field.id}
-                  />
-                </label>
-              );
-            })}
-          </fieldset>
+                <input
+                  className="block-form-input"
+                  type="text"
+                  placeholder={`Введите ${field.title.toLowerCase()}`}
+                  name={field.id}
+                  id={field.id}
+                />
+              </label>
+            );
+          })}
         </form>
       )}
     </>

@@ -21,9 +21,11 @@ function BlocksList(): JSX.Element {
         handleBlockButtonClick={handleBlockButtonClick}
         showBlocks={showBlocks}
       />
-      {BLOCKS.map((block) => (
-        <BlockItem key={block.id} block={block} showBlocks={showBlocks} />
-      ))}
+      <div className="block-forms-wrapper">
+        {BLOCKS.map((block) => (
+          <BlockItem key={block.id} block={block} showBlocks={showBlocks} />
+        ))}
+      </div>
     </>
   );
 }
