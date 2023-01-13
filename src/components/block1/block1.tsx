@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
+import { startBlockListening, stopBlockListening } from "../../store/reducers/block";
 import { BlockNames } from "../../types/block-data";
 
 type BlockProps = {
@@ -7,7 +10,17 @@ type BlockProps = {
 
 function Block1({ showBlocks }: BlockProps): JSX.Element {
   const isShow = showBlocks.includes(BlockNames.Block1);
-  const block1 = useAppSelector((state) => state.blockData.block1);
+  const block1 = useAppSelector((state) => state.blockReducer.block1);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isShow) {
+      dispatch(startBlockListening(BlockNames.Block1))
+    }
+    return () => {
+      dispatch(stopBlockListening(BlockNames.Block1))
+    }
+  }, [dispatch, isShow]);
 
   return (
     <>

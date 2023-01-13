@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
+import { startBlockListening, stopBlockListening } from "../../store/reducers/block";
 import { BlockNames } from "../../types/block-data";
 
 type BlockProps = {
@@ -7,7 +10,17 @@ type BlockProps = {
 
 function Block3({ showBlocks }: BlockProps): JSX.Element {
   const isShow = showBlocks.includes(BlockNames.Block3);
-  const block3 = useAppSelector((state) => state.blockData.block3);
+  const block3 = useAppSelector((state) => state.blockReducer.block3);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isShow) {
+      dispatch(startBlockListening(BlockNames.Block3))
+    }
+    return () => {
+      dispatch(stopBlockListening(BlockNames.Block3))
+    }
+  }, [dispatch, isShow]);
 
   return (
     <>
@@ -39,7 +52,7 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
           </label>
 
           <label className="block-form-label">
-             Почтовый индекс
+            Почтовый индекс
             <input
               className="block-form-input"
               type="text"
