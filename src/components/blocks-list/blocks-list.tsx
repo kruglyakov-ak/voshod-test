@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useBlockApi } from "../../hooks/useBlockApi";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { openChanel } from "../../store/reducers/block";
 import BlockButtons from "../block-buttons/block-buttons";
 import Block1 from "../block1/block1";
 import Block2 from "../block2/block2";
@@ -7,10 +8,11 @@ import Block3 from "../block3/block3";
 
 function BlocksList(): JSX.Element {
   const [showBlocks, setShowBlocks] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useBlockApi();
+    dispatch(openChanel());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleBlockButtonClick = (id: string) => {

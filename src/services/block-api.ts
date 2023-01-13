@@ -1,11 +1,16 @@
 import { BlockNames } from "../types/block-data";
 
-let subscribers = [] as SubscribersType[];
-
+let subscribers: SubscribersType[] = [];
+let statusSubscriber: StatusSubscriber;
 let ws: WebSocket | null = null;
 
 const closeHandler = () => {
+  statusSubscriber(true);
   setTimeout(createChanel, 5000);
+};
+
+const openHandler = () => {
+  statusSubscriber(false);
 };
 
 const subscribeBlockHandler = (e: MessageEvent) => {
@@ -20,12 +25,14 @@ function createChanel() {
   ws?.removeEventListener("close", closeHandler);
   ws?.close();
   ws = new WebSocket("wss://taxivoshod.ru:8999");
+  ws.addEventListener("open", openHandler);
   ws.addEventListener("close", closeHandler);
   ws.addEventListener("message", subscribeBlockHandler);
 }
 
 export const blockAPI = {
-  start() {
+  start(callback: StatusSubscriber) {
+    statusSubscriber = (callback);
     createChanel();
   },
   stop() {
@@ -46,8 +53,11 @@ export type SubscribersType =
   | (({ block2 }: BlockData, blockName: BlockNames) => void)
   | (({ block3 }: BlockData, blockName: BlockNames) => void);
 
+export type StatusSubscriber = (status: boolean) => void;
+
 export type BlockData = {
   [BlockNames.Block1]: { lname: string; fname: string };
   [BlockNames.Block2]: { birthday: string; height: string };
   [BlockNames.Block3]: { city: string; address: string; index: string };
+  isButtonsDisabled: boolean;
 };

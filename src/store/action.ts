@@ -7,4 +7,10 @@ const setBlock = createAction(ActionType.SetBlock, (block) => ({
   },
 }));
 
-export { setBlock };
+const setIsButtonDisabled = createAction(ActionType.SetIsButtonDisabled, (isButtonDisabled: boolean) => ({
+  payload: {
+    isButtonDisabled,
+  },
+}));
+
+export { setBlock, setIsButtonDisabled };

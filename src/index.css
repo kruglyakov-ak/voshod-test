@@ -48,6 +48,10 @@ body {
   cursor: pointer;
 }
 
+.button:disabled {
+  opacity: 0.5;
+}
+
 .block-button:not(:last-child) {
   margin-right: 15px;
 }
@@ -95,7 +99,6 @@ body {
 .block-form-label {
   text-align: start;
   width: 100%;
-
 }
 
 .block-form-label:not(:last-child) {

@@ -1,20 +1,25 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { blockAPI, BlockData, SubscribersType } from "../../services/block-api";
+import { blockAPI, BlockData, StatusSubscriber, SubscribersType } from "../../services/block-api";
 import { BlockNames } from "../../types/block-data";
-import { setBlock } from "../action";
+import { setBlock, setIsButtonDisabled } from "../action";
 import { AppDispatch } from "../store";
 
 const initialState: BlockData = {
   block1: { fname: "", lname: "" },
   block2: { birthday: "", height: "" },
   block3: { address: "", city: "", index: "" },
+  isButtonsDisabled: true,
 };
 
 const blockReducer = createReducer(initialState, (builder) => {
-  builder.addCase(setBlock, (state, action) => {
-    const { block } = action.payload;
-    state[block.blockName as BlockNames] = block.block;
-  });
+  builder
+    .addCase(setBlock, (state, action) => {
+      const { block } = action.payload;
+      state[block.blockName as BlockNames] = block.block;
+    })
+    .addCase(setIsButtonDisabled, (state, action) => {
+      state.isButtonsDisabled = action.payload.isButtonDisabled;
+    });
 });
 
 let _blockDataHandler: SubscribersType | null = null;
@@ -25,6 +30,20 @@ const newBlockDataCreator = (dispatch: AppDispatch) => {
     };
   }
   return _blockDataHandler;
+};
+
+let _statusHandler: StatusSubscriber | null = null;
+const newStatusCreator = (dispatch: AppDispatch) => {
+  if (_statusHandler === null) {
+    _statusHandler = (status) => {
+      dispatch(setIsButtonDisabled(status));
+    };
+  }
+  return _statusHandler;
+};
+
+export const openChanel = () => (dispatch: AppDispatch) => {
+  blockAPI.start(newStatusCreator(dispatch));
 };
 
 export const startBlockListening =
