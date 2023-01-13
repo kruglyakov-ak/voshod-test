@@ -60,4 +60,14 @@ export const stopBlockListening =
     blockAPI.unsubscribe(blockName, newBlockDataCreator(dispatch));
   };
 
+export const changeFocusStatus =
+  (blockName: BlockNames, nameField: string) => () => {
+    blockAPI.focusField(blockName, nameField);
+  };
+
+export const changeBlurStatus =
+  (blockName: BlockNames, nameField: string) => () => {
+    blockAPI.blurField(blockName, nameField);
+  };
+
 export { blockReducer };

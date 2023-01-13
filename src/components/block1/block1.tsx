@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { FocusEvent, useEffect } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import {
+  changeBlurStatus,
+  changeFocusStatus,
   startBlockListening,
   stopBlockListening,
 } from "../../store/reducers/block";
@@ -25,6 +27,14 @@ function Block1({ showBlocks }: BlockProps): JSX.Element {
     };
   }, [dispatch, isShow]);
 
+  const focusHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
+    dispatch(changeFocusStatus(BlockNames.Block1, currentTarget.id))
+  };
+
+  const blurHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
+    dispatch(changeBlurStatus(BlockNames.Block1, currentTarget.id));
+  };
+
   return (
     <>
       {isShow && (
@@ -40,6 +50,8 @@ function Block1({ showBlocks }: BlockProps): JSX.Element {
               id="fname"
               defaultValue={data.fname}
               readOnly={status.fname}
+              onFocus={focusHandler}
+              onBlur={blurHandler}
             />
           </label>
 
@@ -53,6 +65,8 @@ function Block1({ showBlocks }: BlockProps): JSX.Element {
               id="lname"
               defaultValue={data.lname}
               readOnly={status.lname}
+              onFocus={focusHandler}
+              onBlur={blurHandler}
             />
           </label>
         </form>

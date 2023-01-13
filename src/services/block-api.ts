@@ -15,13 +15,15 @@ const openHandler = () => {
 
 const subscribeBlockHandler = (e: MessageEvent) => {
   const currentBlockName: BlockNames = JSON.parse(e.data).block;
-  const newBlock = {
-    data: JSON.parse(e.data).data,
-    status: JSON.parse(e.data).status,
-  };
-  subscribers.forEach((subscriber) => {
-    subscriber(newBlock, currentBlockName);
-  });
+  if (JSON.parse(e.data).data) {
+    const newBlock = {
+      data: JSON.parse(e.data).data,
+      status: JSON.parse(e.data).status,
+    };
+    subscribers.forEach((subscriber) => {
+      subscriber(newBlock, currentBlockName);
+    });
+  }
 };
 
 function createChanel() {
@@ -49,12 +51,22 @@ export const blockAPI = {
     subscribers = subscribers.filter((subscriber) => subscriber !== callback);
     ws?.send(JSON.stringify({ command: "unsubscribe", block: blockName }));
   },
+  focusField(blockName: BlockNames, fieldName: string) {
+    ws?.send(
+      JSON.stringify({ command: "focus", block: blockName, field: fieldName })
+    );
+  },
+  blurField(blockName: BlockNames, fieldName: string) {
+    ws?.send(
+      JSON.stringify({ command: "blur", block: blockName, field: fieldName })
+    );
+  },
 };
 
-export type SubscribersType =
-  | (({ data, status }: any, blockName: BlockNames) => void)
-  | (({ data, status }: any, blockName: BlockNames) => void)
-  | (({ data, status }: any, blockName: BlockNames) => void);
+export type SubscribersType = (
+  { data, status }: any,
+  blockName: BlockNames
+) => void;
 
 export type ConnectionStatusSubscriber = (status: boolean) => void;
 
