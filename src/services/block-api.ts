@@ -1,16 +1,16 @@
 import { BlockNames } from "../types/block-data";
 
 let subscribers: SubscribersType[] = [];
-let statusSubscriber: StatusSubscriber;
+let connectionStatusSubscriber: ConnectionStatusSubscriber;
 let ws: WebSocket | null = null;
 
 const closeHandler = () => {
-  statusSubscriber(true);
+  connectionStatusSubscriber(true);
   setTimeout(createChanel, 5000);
 };
 
 const openHandler = () => {
-  statusSubscriber(false);
+  connectionStatusSubscriber(false);
 };
 
 const subscribeBlockHandler = (e: MessageEvent) => {
@@ -31,8 +31,8 @@ function createChanel() {
 }
 
 export const blockAPI = {
-  start(callback: StatusSubscriber) {
-    statusSubscriber = (callback);
+  start(callback: ConnectionStatusSubscriber) {
+    connectionStatusSubscriber = (callback);
     createChanel();
   },
   stop() {
@@ -53,7 +53,7 @@ export type SubscribersType =
   | (({ block2 }: BlockData, blockName: BlockNames) => void)
   | (({ block3 }: BlockData, blockName: BlockNames) => void);
 
-export type StatusSubscriber = (status: boolean) => void;
+export type ConnectionStatusSubscriber = (status: boolean) => void;
 
 export type BlockData = {
   [BlockNames.Block1]: { lname: string; fname: string };
