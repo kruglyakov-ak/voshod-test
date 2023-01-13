@@ -5,6 +5,7 @@ export enum BlockNames {
 }
 
 export enum ActionType {
-  SetBlock = "data/setBlock",
+  SetBlockData = "data/setBlockData",
+  SetBlockStatus = "data/setBlockStatus",
   SetIsButtonDisabled = "data/setIsButtonDisabled",
 }

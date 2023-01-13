@@ -14,10 +14,13 @@ const openHandler = () => {
 };
 
 const subscribeBlockHandler = (e: MessageEvent) => {
-  const newBlockData = JSON.parse(e.data).data;
-  const currentBlockName = JSON.parse(e.data).block;
+  const currentBlockName: BlockNames = JSON.parse(e.data).block;
+  const newBlock = {
+    data: JSON.parse(e.data).data,
+    status: JSON.parse(e.data).status,
+  };
   subscribers.forEach((subscriber) => {
-    subscriber(newBlockData, currentBlockName);
+    subscriber(newBlock, currentBlockName);
   });
 };
 
@@ -32,7 +35,7 @@ function createChanel() {
 
 export const blockAPI = {
   start(callback: ConnectionStatusSubscriber) {
-    connectionStatusSubscriber = (callback);
+    connectionStatusSubscriber = callback;
     createChanel();
   },
   stop() {
@@ -49,15 +52,24 @@ export const blockAPI = {
 };
 
 export type SubscribersType =
-  | (({ block1 }: BlockData, blockName: BlockNames) => void)
-  | (({ block2 }: BlockData, blockName: BlockNames) => void)
-  | (({ block3 }: BlockData, blockName: BlockNames) => void);
+  | (({ data, status }: any, blockName: BlockNames) => void)
+  | (({ data, status }: any, blockName: BlockNames) => void)
+  | (({ data, status }: any, blockName: BlockNames) => void);
 
 export type ConnectionStatusSubscriber = (status: boolean) => void;
 
 export type BlockData = {
-  [BlockNames.Block1]: { lname: string; fname: string };
-  [BlockNames.Block2]: { birthday: string; height: string };
-  [BlockNames.Block3]: { city: string; address: string; index: string };
+  [BlockNames.Block1]: {
+    data: { lname: string; fname: string };
+    status: { fname: boolean; lname: boolean };
+  };
+  [BlockNames.Block2]: {
+    data: { birthday: string; height: string };
+    status: { birthday: boolean; height: boolean };
+  };
+  [BlockNames.Block3]: {
+    data: { city: string; address: string; index: string };
+    status: { address: boolean; city: boolean; index: boolean };
+  };
   isButtonsDisabled: boolean;
 };

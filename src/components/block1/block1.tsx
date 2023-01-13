@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { startBlockListening, stopBlockListening } from "../../store/reducers/block";
+import {
+  startBlockListening,
+  stopBlockListening,
+} from "../../store/reducers/block";
 import { BlockNames } from "../../types/block-data";
 
 type BlockProps = {
@@ -10,16 +13,16 @@ type BlockProps = {
 
 function Block1({ showBlocks }: BlockProps): JSX.Element {
   const isShow = showBlocks.includes(BlockNames.Block1);
-  const block1 = useAppSelector((state) => state.blockReducer.block1);
+  const { data, status } = useAppSelector((state) => state.blockReducer.block1);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (isShow) {
-      dispatch(startBlockListening(BlockNames.Block1))
+      dispatch(startBlockListening(BlockNames.Block1));
     }
     return () => {
-      dispatch(stopBlockListening(BlockNames.Block1))
-    }
+      dispatch(stopBlockListening(BlockNames.Block1));
+    };
   }, [dispatch, isShow]);
 
   return (
@@ -35,7 +38,8 @@ function Block1({ showBlocks }: BlockProps): JSX.Element {
               placeholder={`Введите имя`}
               name="fname"
               id="fname"
-              defaultValue={block1.fname}
+              defaultValue={data.fname}
+              readOnly={status.fname}
             />
           </label>
 
@@ -47,7 +51,8 @@ function Block1({ showBlocks }: BlockProps): JSX.Element {
               placeholder={`Введите фамилию`}
               name="lname"
               id="lname"
-              defaultValue={block1.lname}
+              defaultValue={data.lname}
+              readOnly={status.lname}
             />
           </label>
         </form>

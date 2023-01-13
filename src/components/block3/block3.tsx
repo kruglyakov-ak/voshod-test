@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { startBlockListening, stopBlockListening } from "../../store/reducers/block";
+import {
+  startBlockListening,
+  stopBlockListening,
+} from "../../store/reducers/block";
 import { BlockNames } from "../../types/block-data";
 
 type BlockProps = {
@@ -10,16 +13,16 @@ type BlockProps = {
 
 function Block3({ showBlocks }: BlockProps): JSX.Element {
   const isShow = showBlocks.includes(BlockNames.Block3);
-  const block3 = useAppSelector((state) => state.blockReducer.block3);
+  const { data, status } = useAppSelector((state) => state.blockReducer.block3);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (isShow) {
-      dispatch(startBlockListening(BlockNames.Block3))
+      dispatch(startBlockListening(BlockNames.Block3));
     }
     return () => {
-      dispatch(stopBlockListening(BlockNames.Block3))
-    }
+      dispatch(stopBlockListening(BlockNames.Block3));
+    };
   }, [dispatch, isShow]);
 
   return (
@@ -35,7 +38,8 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
               placeholder={`Введите город`}
               name="city"
               id="city"
-              defaultValue={block3.city}
+              defaultValue={data.city}
+              readOnly={status.city}
             />
           </label>
 
@@ -47,7 +51,8 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
               placeholder={`Введите улицу`}
               name="address"
               id="address"
-              defaultValue={block3.address}
+              defaultValue={data.address}
+              readOnly={status.address}
             />
           </label>
 
@@ -59,7 +64,8 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
               placeholder={`Введите почтовый индекс`}
               name="index"
               id="index"
-              defaultValue={block3.index}
+              defaultValue={data.index}
+              readOnly={status.index}
             />
           </label>
         </form>
