@@ -95,5 +95,5 @@ export type BlockData = {
     data: { city: string; address: string; index: string };
     status: { address: boolean; city: boolean; index: boolean };
   };
-  isButtonsDisabled: boolean;
+  isConnectionLost: boolean;
 };

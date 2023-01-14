@@ -10,14 +10,14 @@ function BlockButtons({
   handleBlockButtonClick,
   showBlocks,
 }: BlockButtonsProps): JSX.Element {
-  const isButtonsDisabled = useAppSelector(
-    (state) => state.blockReducer.isButtonsDisabled
+  const isConnectionLost = useAppSelector(
+    (state) => state.blockReducer.isConnectionLost
   );
 
   return (
     <div className="block-button-wrapper">
       <button
-        disabled={isButtonsDisabled}
+        disabled={isConnectionLost}
         className={
           showBlocks.includes(BlockNames.Block1)
             ? "button block-button button--active"
@@ -30,7 +30,7 @@ function BlockButtons({
       </button>
 
       <button
-        disabled={isButtonsDisabled}
+        disabled={isConnectionLost}
         className={
           showBlocks.includes(BlockNames.Block2)
             ? "button block-button button--active"
@@ -43,7 +43,7 @@ function BlockButtons({
       </button>
 
       <button
-        disabled={isButtonsDisabled}
+        disabled={isConnectionLost}
         className={
           showBlocks.includes(BlockNames.Block3)
             ? "button block-button button--active"
@@ -55,7 +55,7 @@ function BlockButtons({
         Блок 3
       </button>
 
-      {isButtonsDisabled && <h1>Соединение с сервером не установленно</h1>}
+      {isConnectionLost && <h1>Соединение с сервером не установленно</h1>}
     </div>
   );
 }

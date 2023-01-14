@@ -23,13 +23,13 @@ const setFieldStatus = createAction(
   })
 );
 
-const setIsButtonDisabled = createAction(
-  ActionType.SetIsButtonDisabled,
-  (isButtonDisabled: boolean) => ({
+const setIsConnectionLost = createAction(
+  ActionType.SetIsConnectionLost,
+  (isConnectionLost: boolean) => ({
     payload: {
-      isButtonDisabled,
+      isConnectionLost,
     },
   })
 );
 
-export { setBlockData, setIsButtonDisabled, setBlockStatus, setFieldStatus };
+export { setBlockData, setIsConnectionLost, setBlockStatus, setFieldStatus };

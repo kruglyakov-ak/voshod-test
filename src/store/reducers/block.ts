@@ -3,7 +3,7 @@ import { blockAPI, BlockData, SubscribersType } from "../../services/block-api";
 import { BlockNames } from "../../types/block-data";
 import {
   setBlockData,
-  setIsButtonDisabled,
+  setIsConnectionLost,
   setBlockStatus,
   setFieldStatus,
 } from "../action";
@@ -22,7 +22,7 @@ const initialState: BlockData = {
     data: { address: "", city: "", index: "" },
     status: { address: false, city: false, index: false },
   },
-  isButtonsDisabled: true,
+  isConnectionLost: true,
 };
 
 const blockReducer = createReducer(initialState, (builder) => {
@@ -40,8 +40,8 @@ const blockReducer = createReducer(initialState, (builder) => {
       state[blockName as BlockNames] =  state[blockName as BlockNames]
       state[blockName].status[fieldName] = status;
     })
-    .addCase(setIsButtonDisabled, (state, action) => {
-      state.isButtonsDisabled = action.payload.isButtonDisabled;
+    .addCase(setIsConnectionLost, (state, action) => {
+      state.isConnectionLost = action.payload.isConnectionLost;
     });
 });
 
@@ -61,7 +61,7 @@ const newBlockDataCreator = (dispatch: AppDispatch) => {
 };
 
 export const openChanel = () => (dispatch: AppDispatch) => {
-  blockAPI.start((status) => dispatch(setIsButtonDisabled(status)));
+  blockAPI.start((status) => dispatch(setIsConnectionLost(status)));
 };
 
 export const startBlockListening =
