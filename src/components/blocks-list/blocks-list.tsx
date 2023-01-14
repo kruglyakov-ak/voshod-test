@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { openChanel } from "../../store/reducers/block";
 import BlockButtons from "../block-buttons/block-buttons";
 import Block1 from "../block1/block1";
@@ -8,12 +9,21 @@ import Block3 from "../block3/block3";
 
 function BlocksList(): JSX.Element {
   const [showBlocks, setShowBlocks] = useState<string[]>([]);
+  const isConnectionLost = useAppSelector(
+    (state) => state.blockReducer.isConnectionLost
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(openChanel());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (isConnectionLost) {
+      setShowBlocks([]);
+    }
+  }, [isConnectionLost]);
 
   const handleBlockButtonClick = (id: string) => {
     if (!showBlocks.includes(id)) {
