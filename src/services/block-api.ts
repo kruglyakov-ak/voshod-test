@@ -38,6 +38,8 @@ const subscribeBlockHandler = (e: MessageEvent) => {
 
 function createChanel() {
   ws?.removeEventListener("close", closeHandler);
+  ws?.removeEventListener("message", subscribeBlockHandler);
+  ws?.removeEventListener("open", openHandler);
   ws?.close();
   ws = new WebSocket("wss://taxivoshod.ru:8999");
   ws.addEventListener("open", openHandler);
