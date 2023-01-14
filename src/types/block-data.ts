@@ -8,4 +8,5 @@ export enum ActionType {
   SetBlockData = "data/setBlockData",
   SetBlockStatus = "data/setBlockStatus",
   SetIsButtonDisabled = "data/setIsButtonDisabled",
+  SetFieldStatus = "data/setFieldStatus",
 }

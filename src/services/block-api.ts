@@ -23,6 +23,16 @@ const subscribeBlockHandler = (e: MessageEvent) => {
     subscribers.forEach((subscriber) => {
       subscriber(newBlock, currentBlockName);
     });
+  } else if (JSON.parse(e.data).focus) {
+    const currentFieldName = JSON.parse(e.data).focus;
+    subscribers.forEach((subscriber) => {
+      subscriber(null, currentBlockName, currentFieldName, true);
+    });
+  } else if (JSON.parse(e.data).blur) {
+    const currentFieldName = JSON.parse(e.data).blur;
+    subscribers.forEach((subscriber) => {
+      subscriber(null, currentBlockName, currentFieldName, false);
+    });
   }
 };
 
@@ -65,7 +75,9 @@ export const blockAPI = {
 
 export type SubscribersType = (
   { data, status }: any,
-  blockName: BlockNames
+  blockName: BlockNames,
+  fieldName?: string,
+  fieldStatus?: boolean
 ) => void;
 
 export type ConnectionStatusSubscriber = (status: boolean) => void;

@@ -2,8 +2,8 @@ import { useEffect, FocusEvent } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import {
-  changeBlurStatus,
-  changeFocusStatus,
+  sendBlurStatus,
+  sendFocusStatus,
   startBlockListening,
   stopBlockListening,
 } from "../../store/reducers/block";
@@ -28,11 +28,11 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
   }, [dispatch, isShow]);
 
   const focusHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
-    dispatch(changeFocusStatus(BlockNames.Block3, currentTarget.id));
+    dispatch(sendFocusStatus(BlockNames.Block3, currentTarget.id));
   };
 
   const blurHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
-    dispatch(changeBlurStatus(BlockNames.Block3, currentTarget.id));
+    dispatch(sendBlurStatus(BlockNames.Block3, currentTarget.id));
   };
 
   return (
@@ -40,7 +40,14 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
       {isShow && (
         <form className="block-form">
           <h2 className="block-form-title">Блок 3</h2>
-          <label className="block-form-label">
+          <label
+            className={
+              status.city
+                ? "block-form-label block-form-label-error"
+                : "block-form-label"
+            }
+          >
+            {" "}
             Город
             <input
               className="block-form-input"
@@ -55,7 +62,14 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
             />
           </label>
 
-          <label className="block-form-label">
+          <label
+            className={
+              status.address
+                ? "block-form-label block-form-label-error"
+                : "block-form-label"
+            }
+          >
+            {" "}
             Улица
             <input
               className="block-form-input"
@@ -70,7 +84,14 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
             />
           </label>
 
-          <label className="block-form-label">
+          <label
+            className={
+              status.index
+                ? "block-form-label block-form-label-error"
+                : "block-form-label"
+            }
+          >
+            {" "}
             Почтовый индекс
             <input
               className="block-form-input"

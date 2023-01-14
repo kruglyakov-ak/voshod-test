@@ -2,8 +2,8 @@ import { useEffect, FocusEvent } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import {
-  changeBlurStatus,
-  changeFocusStatus,
+  sendBlurStatus,
+  sendFocusStatus,
   startBlockListening,
   stopBlockListening,
 } from "../../store/reducers/block";
@@ -28,11 +28,11 @@ function Block2({ showBlocks }: BlockProps): JSX.Element {
   }, [dispatch, isShow]);
 
   const focusHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
-    dispatch(changeFocusStatus(BlockNames.Block2, currentTarget.id));
+    dispatch(sendFocusStatus(BlockNames.Block2, currentTarget.id));
   };
 
   const blurHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
-    dispatch(changeBlurStatus(BlockNames.Block2, currentTarget.id));
+    dispatch(sendBlurStatus(BlockNames.Block2, currentTarget.id));
   };
 
   return (
@@ -40,7 +40,13 @@ function Block2({ showBlocks }: BlockProps): JSX.Element {
       {isShow && (
         <form className="block-form">
           <h2 className="block-form-title">Блок 2</h2>
-          <label className="block-form-label">
+          <label
+            className={
+              status.birthday
+                ? "block-form-label block-form-label-error"
+                : "block-form-label"
+            }
+          >
             Дата рождения
             <input
               className="block-form-input"
@@ -55,7 +61,13 @@ function Block2({ showBlocks }: BlockProps): JSX.Element {
             />
           </label>
 
-          <label className="block-form-label">
+          <label
+            className={
+              status.height
+                ? "block-form-label block-form-label-error"
+                : "block-form-label"
+            }
+          >
             Рост
             <input
               className="block-form-input"

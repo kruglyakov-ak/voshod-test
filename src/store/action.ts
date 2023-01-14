@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { ActionType } from "../types/block-data";
+import { ActionType} from "../types/block-data";
 
 const setBlockData = createAction(ActionType.SetBlockData, (block) => ({
   payload: {
@@ -12,10 +12,24 @@ const setBlockStatus = createAction(ActionType.SetBlockStatus, (block) => ({
   },
 }));
 
-const setIsButtonDisabled = createAction(ActionType.SetIsButtonDisabled, (isButtonDisabled: boolean) => ({
-  payload: {
-    isButtonDisabled,
-  },
-}));
+const setFieldStatus = createAction(
+  ActionType.SetFieldStatus,
+  (blockName, fieldName, status) => ({
+    payload: {
+      blockName,
+      fieldName,
+      status,
+    },
+  })
+);
 
-export { setBlockData, setIsButtonDisabled, setBlockStatus };
+const setIsButtonDisabled = createAction(
+  ActionType.SetIsButtonDisabled,
+  (isButtonDisabled: boolean) => ({
+    payload: {
+      isButtonDisabled,
+    },
+  })
+);
+
+export { setBlockData, setIsButtonDisabled, setBlockStatus, setFieldStatus };

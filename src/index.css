@@ -99,10 +99,22 @@ body {
 .block-form-label {
   text-align: start;
   width: 100%;
+  position: relative;
 }
 
 .block-form-label:not(:last-child) {
   margin-bottom: 20px;
+}
+
+.block-form-label-error::after {
+  content: "Поле редактируется другим пользователем";
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 11px;
+  color: red;
 }
 
 .block-form-input {
@@ -119,4 +131,8 @@ body {
   border: none;
   background: #42484f;
   color: #fff;
+}
+
+.block-form-input:read-only {
+  border: 1px solid red;
 }
