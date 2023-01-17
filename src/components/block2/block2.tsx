@@ -1,39 +1,8 @@
-import { useEffect, FocusEvent } from "react";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { BlockComponentProps } from "../../hoc/whithFocusBlurHandlers";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import {
-  sendBlurStatus,
-  sendFocusStatus,
-  startBlockListening,
-  stopBlockListening,
-} from "../../store/reducers/block";
-import { BlockNames } from "../../types/block-data";
 
-type BlockProps = {
-  showBlocks: string[];
-};
-
-function Block2({ showBlocks }: BlockProps): JSX.Element {
-  const isShow = showBlocks.includes(BlockNames.Block2);
+function Block2({ isShow, onBlur, onFocus }: BlockComponentProps): JSX.Element {
   const { data, status } = useAppSelector((state) => state.blockReducer.block2);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (isShow) {
-      dispatch(startBlockListening(BlockNames.Block2));
-    }
-    return () => {
-      dispatch(stopBlockListening(BlockNames.Block2));
-    };
-  }, [dispatch, isShow]);
-
-  const focusHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
-    dispatch(sendFocusStatus(BlockNames.Block2, currentTarget.id));
-  };
-
-  const blurHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
-    dispatch(sendBlurStatus(BlockNames.Block2, currentTarget.id));
-  };
 
   return (
     <>
@@ -56,8 +25,8 @@ function Block2({ showBlocks }: BlockProps): JSX.Element {
               id="birthday"
               defaultValue={data.birthday}
               readOnly={status.birthday}
-              onFocus={focusHandler}
-              onBlur={blurHandler}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           </label>
 
@@ -77,8 +46,8 @@ function Block2({ showBlocks }: BlockProps): JSX.Element {
               id="height"
               defaultValue={data.height}
               readOnly={status.height}
-              onFocus={focusHandler}
-              onBlur={blurHandler}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           </label>
         </form>

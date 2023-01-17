@@ -1,39 +1,8 @@
-import { useEffect, FocusEvent } from "react";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { BlockComponentProps } from "../../hoc/whithFocusBlurHandlers";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import {
-  sendBlurStatus,
-  sendFocusStatus,
-  startBlockListening,
-  stopBlockListening,
-} from "../../store/reducers/block";
-import { BlockNames } from "../../types/block-data";
 
-type BlockProps = {
-  showBlocks: string[];
-};
-
-function Block3({ showBlocks }: BlockProps): JSX.Element {
-  const isShow = showBlocks.includes(BlockNames.Block3);
+function Block3({ isShow, onBlur, onFocus }: BlockComponentProps): JSX.Element {
   const { data, status } = useAppSelector((state) => state.blockReducer.block3);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (isShow) {
-      dispatch(startBlockListening(BlockNames.Block3));
-    }
-    return () => {
-      dispatch(stopBlockListening(BlockNames.Block3));
-    };
-  }, [dispatch, isShow]);
-
-  const focusHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
-    dispatch(sendFocusStatus(BlockNames.Block3, currentTarget.id));
-  };
-
-  const blurHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
-    dispatch(sendBlurStatus(BlockNames.Block3, currentTarget.id));
-  };
 
   return (
     <>
@@ -47,7 +16,6 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
                 : "block-form-label"
             }
           >
-            {" "}
             Город
             <input
               className="block-form-input"
@@ -57,8 +25,8 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
               id="city"
               defaultValue={data.city}
               readOnly={status.city}
-              onFocus={focusHandler}
-              onBlur={blurHandler}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           </label>
 
@@ -69,7 +37,6 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
                 : "block-form-label"
             }
           >
-            {" "}
             Улица
             <input
               className="block-form-input"
@@ -79,8 +46,8 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
               id="address"
               defaultValue={data.address}
               readOnly={status.address}
-              onFocus={focusHandler}
-              onBlur={blurHandler}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           </label>
 
@@ -91,7 +58,6 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
                 : "block-form-label"
             }
           >
-            {" "}
             Почтовый индекс
             <input
               className="block-form-input"
@@ -101,8 +67,8 @@ function Block3({ showBlocks }: BlockProps): JSX.Element {
               id="index"
               defaultValue={data.index}
               readOnly={status.index}
-              onFocus={focusHandler}
-              onBlur={blurHandler}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           </label>
         </form>

@@ -1,39 +1,8 @@
-import { FocusEvent, useEffect } from "react";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { BlockComponentProps } from "../../hoc/whithFocusBlurHandlers";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import {
-  sendBlurStatus,
-  sendFocusStatus,
-  startBlockListening,
-  stopBlockListening,
-} from "../../store/reducers/block";
-import { BlockNames } from "../../types/block-data";
 
-type BlockProps = {
-  showBlocks: string[];
-};
-
-function Block1({ showBlocks }: BlockProps): JSX.Element {
-  const isShow = showBlocks.includes(BlockNames.Block1);
+function Block1({ isShow, onBlur, onFocus }: BlockComponentProps): JSX.Element {
   const { data, status } = useAppSelector((state) => state.blockReducer.block1);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (isShow) {
-      dispatch(startBlockListening(BlockNames.Block1));
-    }
-    return () => {
-      dispatch(stopBlockListening(BlockNames.Block1));
-    };
-  }, [dispatch, isShow]);
-
-  const focusHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
-    dispatch(sendFocusStatus(BlockNames.Block1, currentTarget.id));
-  };
-
-  const blurHandler = ({ currentTarget }: FocusEvent<HTMLInputElement>) => {
-    dispatch(sendBlurStatus(BlockNames.Block1, currentTarget.id));
-  };
 
   return (
     <>
@@ -56,8 +25,8 @@ function Block1({ showBlocks }: BlockProps): JSX.Element {
               id="fname"
               defaultValue={data.fname}
               readOnly={status.fname}
-              onFocus={focusHandler}
-              onBlur={blurHandler}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           </label>
 
@@ -77,8 +46,8 @@ function Block1({ showBlocks }: BlockProps): JSX.Element {
               id="lname"
               defaultValue={data.lname}
               readOnly={status.lname}
-              onFocus={focusHandler}
-              onBlur={blurHandler}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           </label>
         </form>
