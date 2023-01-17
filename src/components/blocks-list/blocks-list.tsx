@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import whithFocusBlurHandlers from "../../hoc/whithFocusBlurHandlers";
+import withFocusBlurHandlers from "../../hoc/withFocusBlurHandlers";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { openChanel } from "../../store/reducers/block";
@@ -35,19 +35,19 @@ function BlocksList(): JSX.Element {
     }
   };
 
-  const Block1WhithFocusBlurHandlers = useMemo(
+  const Block1WithFocusBlurHandlers = useMemo(
     () =>
-      whithFocusBlurHandlers(Block1, BlockNames.Block1, showBlocks, dispatch),
+      withFocusBlurHandlers(Block1, BlockNames.Block1, showBlocks, dispatch),
     [dispatch, showBlocks]
   );
-  const Block2WhithFocusBlurHandlers = useMemo(
+  const Block2WithFocusBlurHandlers = useMemo(
     () =>
-      whithFocusBlurHandlers(Block2, BlockNames.Block2, showBlocks, dispatch),
+      withFocusBlurHandlers(Block2, BlockNames.Block2, showBlocks, dispatch),
     [dispatch, showBlocks]
   );
-  const Block3WhithFocusBlurHandlers = useMemo(
+  const Block3WithFocusBlurHandlers = useMemo(
     () =>
-      whithFocusBlurHandlers(Block3, BlockNames.Block3, showBlocks, dispatch),
+      withFocusBlurHandlers(Block3, BlockNames.Block3, showBlocks, dispatch),
     [dispatch, showBlocks]
   );
 
@@ -58,9 +58,9 @@ function BlocksList(): JSX.Element {
         handleBlockButtonClick={handleBlockButtonClick}
       />
       <div className="block-forms-wrapper">
-        <Block1WhithFocusBlurHandlers />
-        <Block2WhithFocusBlurHandlers />
-        <Block3WhithFocusBlurHandlers />
+        <Block1WithFocusBlurHandlers />
+        <Block2WithFocusBlurHandlers />
+        <Block3WithFocusBlurHandlers />
       </div>
     </>
   );

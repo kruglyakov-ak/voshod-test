@@ -1,4 +1,4 @@
-import { BlockComponentProps } from "../../hoc/whithFocusBlurHandlers";
+import { BlockComponentProps } from "../../hoc/withFocusBlurHandlers";
 import { useAppSelector } from "../../hooks/useAppSelector";
 
 function Block3({ isShow, onBlur, onFocus }: BlockComponentProps): JSX.Element {

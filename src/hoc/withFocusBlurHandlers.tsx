@@ -14,7 +14,7 @@ export type BlockComponentProps = {
   onBlur: ({ currentTarget }: FocusEvent<HTMLInputElement>) => void;
 };
 
-function whithFocusBlurHandlers(
+function withFocusBlurHandlers(
   WrappedComponent: React.FC<BlockComponentProps>,
   blockName: BlockNames,
   showBlocks: string[],
@@ -62,4 +62,4 @@ function whithFocusBlurHandlers(
   };
 }
 
-export default whithFocusBlurHandlers;
+export default withFocusBlurHandlers;
