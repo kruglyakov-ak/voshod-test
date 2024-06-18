@@ -3,6 +3,5 @@ import { baseUrl } from "./endpoints";
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
-  tagTypes: ["Users"],
   endpoints: () => ({}),
 });

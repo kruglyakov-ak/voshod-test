@@ -1,11 +1,9 @@
-export type IApiResponse<T extends string, U> = {
+export type IApiResponse<T> = {
   result?: number;
   page?: number;
   pages?: number;
   per_page?: number;
-} & {
-  [key in T]: U;
-};
+} & T;
 
 export interface ICarsListItem {
   id: number;
@@ -15,4 +13,22 @@ export interface ICarsListItem {
   price: number;
   image: string | null;
   tarif: string[];
+}
+
+export interface IBrandFilters {
+  name: string;
+  code: string;
+  values: string[];
+}
+
+export interface IModelFilters {
+  name: string;
+  type: string;
+  values: Array<{ brand: string; models: string[] }>;
+}
+
+export interface ITarifFilters {
+  name: string;
+  type: string;
+  values: Record<string, string>;
 }

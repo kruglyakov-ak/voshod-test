@@ -24,8 +24,8 @@ const CarsListDtoSchema = z.object({
 export const carsApi = baseApi.injectEndpoints({
   endpoints: (create) => ({
     getCars: create.query<
-      IApiResponse<"list", ICarsListItem[]>,
-      { brands: string[]; models: string[]; tarifs: string[], page: number }
+      IApiResponse<{ list: ICarsListItem[] }>,
+      { brands: string[]; models: string[]; tarifs: string[]; page: number }
     >({
       query: ({ brands, models, tarifs, page }) =>
         endpoints.getCars({ brands, models, tarifs, page }),
@@ -34,5 +34,3 @@ export const carsApi = baseApi.injectEndpoints({
   }),
   overrideExisting: true,
 });
-
-
