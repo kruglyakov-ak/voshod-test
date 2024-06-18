@@ -11,8 +11,6 @@ export const endpoints = {
     models: string[];
     tarifs: string[];
   }) =>
-   {
-    console.log(tarifs[0], encodeURIComponent(tarifs[0]))
-    return `?w=catalog-cars${brands.length ? brands.map((brand) => `&brand=${encodeURIComponent(brand)}`).join("") : ""}${models.length ? models.map((model) => `&model=${encodeURIComponent(model)}`).join("") : ""}${tarifs.length ? tarifs.map((tarif) => `&tarif=${encodeURIComponent(tarif)}`).join("") : ""}`},
+    `?w=catalog-cars${brands.length ? brands.map((brand) => `&brand=${brand}`).join("") : ""}${models.length ? models.map((model) => `&model=${model}`).join("") : ""}${tarifs.length ? tarifs.map((tarif) => `&tarif=${tarif}`).join("") : ""}`,
   getCarsById: (id: string) => `?w=catalog-car&id=${id}`,
 };
