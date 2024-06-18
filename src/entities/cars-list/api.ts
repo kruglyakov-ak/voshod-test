@@ -5,7 +5,7 @@ import { z } from "zod";
 
 const CarsListDtoSchema = z.object({
   result: z.number().optional(),
-  page: z.number().optional(),
+  page: z.coerce.number().optional(),
   pages: z.number().optional(),
   per_page: z.number().optional(),
   list: z.array(
@@ -25,10 +25,10 @@ export const carsApi = baseApi.injectEndpoints({
   endpoints: (create) => ({
     getCars: create.query<
       IApiResponse<"list", ICarsListItem[]>,
-      { brands: string[]; models: string[]; tarifs: string[] }
+      { brands: string[]; models: string[]; tarifs: string[], page: number }
     >({
-      query: ({ brands, models, tarifs }) =>
-        endpoints.getCars({ brands, models, tarifs }),
+      query: ({ brands, models, tarifs, page }) =>
+        endpoints.getCars({ brands, models, tarifs, page }),
       transformResponse: (res: unknown) => CarsListDtoSchema.parse(res),
     }),
   }),
