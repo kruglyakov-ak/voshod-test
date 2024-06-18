@@ -1,6 +1,6 @@
 "use client";
 
-import { store } from "@/shared/app-store";
+import { store } from "@/shared/store";
 import React from "react";
 import { Provider } from "react-redux";
 

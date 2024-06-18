@@ -1,9 +1,13 @@
 "use client";
 
-import { useGetCarsListQuery } from "@/entities/cars-list/service";
+import { carsApi } from "@/entities/cars-list/api";
 
 export default function Home() {
-  const { data } = useGetCarsListQuery({ brands: [], models: [] });
+  const { data } = carsApi.useGetCarsQuery({
+    brands: [],
+    models: [],
+    tarifs: [],
+  });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -13,7 +17,7 @@ export default function Home() {
           <p>{model}</p>
           <p>{number}</p>
           <p>{price}</p>
-          <img src={image} alt={`${brand} ${model}`} />
+          {image && <img src={image} alt={`${brand} ${model}`} />}
         </div>
       ))}
     </main>

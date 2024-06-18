@@ -1,13 +1,13 @@
-import { carsList } from "@/entities/cars-list/service";
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import { baseApi } from "./api";
 
 export const store = configureStore({
   reducer: {
-    [carsList.reducerPath]: carsList.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(carsList.middleware),
+    getDefaultMiddleware().concat(baseApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;
