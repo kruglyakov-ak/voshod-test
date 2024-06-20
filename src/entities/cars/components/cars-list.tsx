@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from 'next/navigation'
 import { ScrollArea } from "@/shared/ui/scroll-area";
 import {
   Card,
@@ -24,6 +25,7 @@ import { useAppSelector } from "@/shared/redux";
 import { filtersSlice } from "@/entities/filters/slice";
 
 export function CarsList() {
+  const router = useRouter()
   const [page, setPage] = React.useState(1);
   const brands = useAppSelector(filtersSlice.selectors.getBrands);
   const models = useAppSelector(filtersSlice.selectors.getModels);
@@ -53,6 +55,9 @@ export function CarsList() {
                 <Card
                   key={id}
                   className="w-[32%] flex items-center cursor-pointer transition-all hover:border-gray-400 hover:transition-all active:scale-95 active:transition-all "
+                  onClick={() => {
+                    router.push('/cars/' + id)
+                  }}
                 >
                   <CardHeader>
                     <CardTitle className="w-max ">
@@ -83,7 +88,7 @@ export function CarsList() {
         </div>
       </ScrollArea>
 
-      <Pagination className="mt-4">
+      {cars?.pages && cars?.pages > 1 && <Pagination className="mt-4">
         <PaginationContent>
           <PaginationItem className="cursor-pointer">
             <PaginationPrevious onClick={() => page > 1 && setPage(page - 1)} />
@@ -91,7 +96,8 @@ export function CarsList() {
 
           {cars?.pages &&
             Array.from({ length: cars?.pages }, (_, i) => i + 1).map((i) => (
-              <PaginationItem className="cursor-pointer" key={i}>
+              <PaginationItem className="cursor-pointer"
+                              key={i}>
                 <PaginationLink
                   isActive={page === i}
                   onClick={() => setPage(i)}
@@ -107,7 +113,7 @@ export function CarsList() {
             />
           </PaginationItem>
         </PaginationContent>
-      </Pagination>
+      </Pagination>}
     </>
   );
 }

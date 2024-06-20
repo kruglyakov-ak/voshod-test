@@ -32,3 +32,17 @@ export interface ITarifFilters {
   type: string;
   values: Record<string, string>;
 }
+
+export interface ICarImage {
+  id: string
+  image: string
+}
+
+export interface ICar {
+  id: number;
+  brand: string;
+  model: string;
+  price: number;
+  images: ICarImage[];
+  tarif: string[];
+}
