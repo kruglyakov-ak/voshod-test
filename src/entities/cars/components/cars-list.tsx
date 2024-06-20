@@ -18,7 +18,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/shared/ui/pagination";
-import React from "react";
+import React, { useEffect } from "react";
 import { carsApi } from "../api";
 import { Spinner } from "@/shared/ui/spinner";
 import { useAppSelector } from "@/shared/redux";
@@ -40,6 +40,10 @@ export function CarsList() {
     tarifs: tarifs.map(({ value }) => value),
     page,
   });
+
+  useEffect(() => {
+    setPage(1);
+  }, [brands, models, tarifs]);
 
   return (
     <>
