@@ -20,17 +20,22 @@ import {
 import React from "react";
 import { carsApi } from "../api";
 import { Spinner } from "@/shared/ui/spinner";
+import { useAppSelector } from "@/shared/redux";
+import { filtersSlice } from "@/entities/filters/slice";
 
 export function CarsList() {
   const [page, setPage] = React.useState(1);
+  const brands = useAppSelector(filtersSlice.selectors.getBrands);
+  const models = useAppSelector(filtersSlice.selectors.getModels);
+  const tarifs = useAppSelector(filtersSlice.selectors.getTarifs);
   const {
     data: cars,
     isLoading,
     isFetching,
   } = carsApi.useGetCarsQuery({
-    brands: [],
-    models: [],
-    tarifs: [],
+    brands: brands,
+    models: models,
+    tarifs: tarifs,
     page,
   });
 
