@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // basePath: "/voshod-test",
+  basePath: "/voshod-test",
   output: "export",
   reactStrictMode: true,
   images: {
