@@ -43,6 +43,6 @@ export interface ICar {
   brand: string;
   model: string;
   price: number;
-  images: ICarImage[];
+  images: ICarImage[] | null;
   tarif: string[];
 }

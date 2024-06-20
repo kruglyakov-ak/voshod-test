@@ -11,7 +11,7 @@ const CarDtoSchema = z.object({
       brand: z.string(),
       model: z.string(),
       price: z.number(),
-      images: z.array(z.object({ id: z.string(), image: z.string() })),
+      images: z.array(z.object({ id: z.string(), image: z.string() })).nullable(),
       tarif: z.array(z.string())
     })
 });

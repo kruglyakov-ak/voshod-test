@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { ScrollArea } from "@/shared/ui/scroll-area";
 import {
   Card,
@@ -25,7 +25,7 @@ import { useAppSelector } from "@/shared/redux";
 import { filtersSlice } from "@/entities/filters/slice";
 
 export function CarsList() {
-  const router = useRouter()
+  const router = useRouter();
   const [page, setPage] = React.useState(1);
   const brands = useAppSelector(filtersSlice.selectors.getBrands);
   const models = useAppSelector(filtersSlice.selectors.getModels);
@@ -35,9 +35,9 @@ export function CarsList() {
     isLoading,
     isFetching,
   } = carsApi.useGetCarsQuery({
-    brands: brands,
-    models: models,
-    tarifs: tarifs,
+    brands: brands.map(({ value }) => value),
+    models: models.map(({ value }) => value),
+    tarifs: tarifs.map(({ value }) => value),
     page,
   });
 
@@ -56,7 +56,7 @@ export function CarsList() {
                   key={id}
                   className="w-[32%] flex items-center cursor-pointer transition-all hover:border-gray-400 hover:transition-all active:scale-95 active:transition-all "
                   onClick={() => {
-                    router.push('/cars/' + id)
+                    router.push("/cars/" + id);
                   }}
                 >
                   <CardHeader>
@@ -88,32 +88,35 @@ export function CarsList() {
         </div>
       </ScrollArea>
 
-      {cars?.pages && cars?.pages > 1 && <Pagination className="mt-4">
-        <PaginationContent>
-          <PaginationItem className="cursor-pointer">
-            <PaginationPrevious onClick={() => page > 1 && setPage(page - 1)} />
-          </PaginationItem>
+      {cars?.pages && cars?.pages > 1 && (
+        <Pagination className="mt-4">
+          <PaginationContent>
+            <PaginationItem className="cursor-pointer">
+              <PaginationPrevious
+                onClick={() => page > 1 && setPage(page - 1)}
+              />
+            </PaginationItem>
 
-          {cars?.pages &&
-            Array.from({ length: cars?.pages }, (_, i) => i + 1).map((i) => (
-              <PaginationItem className="cursor-pointer"
-                              key={i}>
-                <PaginationLink
-                  isActive={page === i}
-                  onClick={() => setPage(i)}
-                >
-                  {i}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
+            {cars?.pages &&
+              Array.from({ length: cars?.pages }, (_, i) => i + 1).map((i) => (
+                <PaginationItem className="cursor-pointer" key={i}>
+                  <PaginationLink
+                    isActive={page === i}
+                    onClick={() => setPage(i)}
+                  >
+                    {i}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
 
-          <PaginationItem className="cursor-pointer">
-            <PaginationNext
-              onClick={() => page < (cars?.pages || 1) && setPage(page + 1)}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>}
+            <PaginationItem className="cursor-pointer">
+              <PaginationNext
+                onClick={() => page < (cars?.pages || 1) && setPage(page + 1)}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
     </>
   );
 }

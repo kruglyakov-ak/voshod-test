@@ -54,7 +54,9 @@ export const useGetFiltersOptions = () => {
       setModelsOptions(
         filters?.models?.values
           .filter(({ brand }) =>
-            brands.length !== 0 ? brands.includes(brand) : true,
+            brands.length !== 0
+              ? brands.map(({ value }) => value).includes(brand)
+              : true,
           )
           .map(({ brand, models }) =>
             models.map((model) => ({

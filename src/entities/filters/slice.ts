@@ -1,10 +1,11 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@/shared/redux";
+import { Option } from "@/shared/ui/multiple-selector";
 
 export interface FiltersState {
-  brands: string[];
-  models: string[];
-  tarifs: string[];
+  brands: Option[];
+  models: Option[];
+  tarifs: Option[];
 }
 
 const initialState: FiltersState = {
@@ -22,13 +23,13 @@ export const filtersSlice = createSlice({
     getTarifs: (state: FiltersState) => state.tarifs,
   },
   reducers: {
-    setBrands: (state: FiltersState, action: PayloadAction<string[]>) => {
+    setBrands: (state: FiltersState, action: PayloadAction<Option[]>) => {
       state.brands = action.payload;
     },
-    setModels: (state: FiltersState, action: PayloadAction<string[]>) => {
+    setModels: (state: FiltersState, action: PayloadAction<Option[]>) => {
       state.models = action.payload;
     },
-    setTarifs: (state: FiltersState, action: PayloadAction<string[]>) => {
+    setTarifs: (state: FiltersState, action: PayloadAction<Option[]>) => {
       state.tarifs = action.payload;
     },
   },

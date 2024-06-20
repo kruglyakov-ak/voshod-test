@@ -1,7 +1,6 @@
 "use client";
 
-import MultipleSelector, {
-} from "@/shared/ui/multiple-selector";
+import MultipleSelector from "@/shared/ui/multiple-selector";
 import React from "react";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,12 +14,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form";
-import { useAppDispatch } from "@/shared/redux";
-import {
-  setBrands,
-  setModels,
-  setTarifs,
-} from "@/entities/filters/slice";
+import { useAppDispatch, useAppSelector } from "@/shared/redux";
+import { filtersSlice, setBrands, setModels, setTarifs } from "@/entities/filters/slice";
 
 const optionSchema = z
   .object({
@@ -45,6 +40,10 @@ const FormSchema = z.object({
 
 export function Filters() {
   const dispatch = useAppDispatch();
+  const brands = useAppSelector(filtersSlice.selectors.getBrands);
+  const models = useAppSelector(filtersSlice.selectors.getModels);
+  const tarifs = useAppSelector(filtersSlice.selectors.getTarifs);
+
   const { modelsOptions, tarifsOptions, brandsOptions } =
     useGetFiltersOptions();
 
@@ -55,19 +54,16 @@ export function Filters() {
   function onBrandsChange(data: z.infer<typeof optionSchema>) {
     dispatch(setModels([]));
 
-    form.setValue(
-      "models",
-      []
-    );
-    dispatch(setBrands(data.map(({ value }) => value)));
+    form.setValue("models", []);
+    dispatch(setBrands(data));
   }
 
   function onModelsChange(data: z.infer<typeof optionSchema>) {
-    dispatch(setModels(data.map(({ value }) => value)));
+    dispatch(setModels(data));
   }
 
   function onTarifsChange(data: z.infer<typeof optionSchema>) {
-    dispatch(setTarifs(data.map(({ value }) => value)));
+    dispatch(setTarifs(data));
   }
 
   return (
@@ -81,6 +77,7 @@ export function Filters() {
               <FormLabel>Выберете бренд</FormLabel>
               <FormControl>
                 <MultipleSelector
+                  value={brands}
                   emptyIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
                       no results found.
@@ -104,7 +101,7 @@ export function Filters() {
               <FormLabel>Выберете модель</FormLabel>
               <FormControl>
                 <MultipleSelector
-                  value={form.getValues("models")}
+                  value={models}
                   emptyIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
                       no results found.
@@ -128,6 +125,7 @@ export function Filters() {
               <FormLabel>Выберете тариф</FormLabel>
               <FormControl>
                 <MultipleSelector
+                  value={tarifs}
                   emptyIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
                       no results found.
