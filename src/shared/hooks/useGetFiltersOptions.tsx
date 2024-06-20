@@ -68,6 +68,7 @@ export const useGetFiltersOptions = () => {
           .flat() || [],
       );
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [brands]);
 
   return {
