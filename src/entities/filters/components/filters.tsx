@@ -1,86 +1,117 @@
 "use client";
 
-import MultipleSelector, { Option } from "@/shared/ui/multiple-selector";
+import MultipleSelector from "@/shared/ui/multiple-selector";
 import React from "react";
-import { filtersApi } from "../api";
+import z from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useGetFiltersOptions } from "@/shared/hooks/useGetFiltersOptions";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/shared/ui/form";
+
+const optionSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+  group: z.boolean().optional(),
+}).array();
+
+const FormSchema = z.object({
+  brands: optionSchema,
+  models: optionSchema,
+  tarifs: optionSchema,
+});
 
 export function Filters() {
-  const { data: filters } = filtersApi.useGetFiltersQuery();
-  const [modelsOptions, setModelsOptions] = React.useState<Option[]>([]);
-  const [brandsOptions, setBrandsOptions] = React.useState<Option[]>([]);
-  const [tarifsOptions, setTarifsOptions] = React.useState<Option[]>([]);
+ const {modelsOptions, tarifsOptions, brandsOptions }= useGetFiltersOptions()
 
-  React.useEffect(() => {
-    if (filters) {
-      setBrandsOptions(
-        filters?.brands?.values
-          .map((brand) => ({
-            label: brand,
-            value: brand,
-          })))
-      }
-  }, [filters]);
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
 
-  React.useEffect(() => {
-    if (filters) {
-      setModelsOptions(
-        filters?.models?.values.filter(({}) => true)
-          .map(({ brand, models }) =>
-            models.map((model) => ({
-              label: model,
-              value: model,
-              group: brand,
-            })),
-          )
-          .flat() || [],
-      );
-    }
-  }, [filters]);
+  function onBrandsChange(data: z.infer<typeof optionSchema>) {
+    console.log(data)
+  }
 
-  React.useEffect(() => {
-    if (filters) {
-    setTarifsOptions(
-      Object.entries(filters?.tarif?.values || {})
-        .map((tarif) => ({
-          label: tarif[1],
-          value: tarif[0],
-        }))
-    )
-    }
-  }, [filters]);
+  function onModelsChange(data: z.infer<typeof optionSchema>) {
+    console.log(data)
+  }
+
+  function onTarifsChange(data: z.infer<typeof optionSchema>) {
+    console.log(data)
+  }
+
 
   return (
-    <div>
-      <MultipleSelector
-        placeholder="Выберете бренд..."
-        emptyIndicator={
-          <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-            no results found.
-          </p>
-        }
-        options={brandsOptions}
-        groupBy="group"
-      />
-      <MultipleSelector
-        placeholder="Выберете модель..."
-        emptyIndicator={
-          <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-            no results found.
-          </p>
-        }
-        options={modelsOptions}
-        groupBy="group"
-      />
-      <MultipleSelector
-        placeholder="Выберете тфриф..."
-        emptyIndicator={
-          <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-            no results found.
-          </p>
-        }
-        options={tarifsOptions}
-        groupBy="group"
-      />
-    </div>
+      <Form {...form}>
+        <form className={'w-full flex gap-4 mb-5'}>
+          <FormField
+            control={form.control}
+            name="brands"
+            render={({ field }) => (
+              <FormItem className={'w-full'}>
+                <FormLabel>Выберете бренд</FormLabel>
+                <FormControl>
+                  <MultipleSelector
+                    emptyIndicator={
+                      <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                        no results found.
+                      </p>
+                    }
+                    options={brandsOptions}
+                    groupBy="group"
+                    onChange={onBrandsChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="models"
+            render={({ field }) => (
+              <FormItem className={'w-full'}>
+                <FormLabel>Выберете модель</FormLabel>
+                <FormControl>
+                  <MultipleSelector
+                    emptyIndicator={
+                      <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                        no results found.
+                      </p>
+                    }
+                    options={modelsOptions}
+                    groupBy="group"
+                    onChange={onModelsChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="tarifs"
+            render={({ field }) => (
+              <FormItem className={'w-full'}>
+                <FormLabel>Выберете тариф</FormLabel>
+                <FormControl>
+                  <MultipleSelector
+                    emptyIndicator={
+                      <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                        no results found.
+                      </p>
+                    }
+                    options={tarifsOptions}
+                    groupBy="group"
+                    onChange={onTarifsChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </form>
+      </Form>
   );
 }
