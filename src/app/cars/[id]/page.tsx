@@ -1,8 +1,8 @@
 import { CarPage } from "@/entities/car/components/car-page";
 
-export async function generateStaticParams() {
-  return [{ id: "fallback" }];
-}
+export const getStaticPaths = async () => {
+  return { paths: [], fallback: true };
+};
 
 export default function Car() {
   return <CarPage  />;
