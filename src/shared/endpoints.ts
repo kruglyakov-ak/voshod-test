@@ -6,7 +6,7 @@ export const endpoints = {
     brands,
     models,
     tarifs,
-    page
+    page,
   }: {
     brands: string[];
     models: string[];
