@@ -3,7 +3,7 @@ import { endpoints } from "@/shared/endpoints";
 import { IApiResponse, ICarsListItem } from "@/shared/types";
 import { z } from "zod";
 
-const CarsListDtoSchema = z.object({
+export const CarsListDtoSchema = z.object({
   result: z.number().optional(),
   page: z.coerce.number().optional(),
   pages: z.number().optional(),

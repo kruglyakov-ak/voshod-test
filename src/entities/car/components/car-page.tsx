@@ -11,7 +11,7 @@ import {
 import { carApi } from "@/entities/car/api";
 import { Spinner } from "@/shared/ui/spinner";
 import { Button } from "@/shared/ui/button";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   Carousel,
   CarouselContent,
@@ -21,7 +21,6 @@ import {
 } from "@/shared/ui/carousel";
 import Image from "next/image";
 
-import { useParams } from "next/navigation";
 export function CarPage() {
   const { id } = useParams();
   const { data, isLoading, isFetching } = carApi.useGetCarQuery({ id: id as string });
